@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     email: DataTypes.STRING,
     cpf: DataTypes.STRING,
-    active: DataTypes.BOOLEAN,
+    ativo: DataTypes.BOOLEAN,
     role: DataTypes.STRING
   }, {
     sequelize,
