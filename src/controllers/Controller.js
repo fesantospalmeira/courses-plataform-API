@@ -22,12 +22,12 @@ class Controller {
     }
     async createNew(req, res) {
         const dataForCreation = req.body;
-        // try {
+         try {
             const newRegisterCreated = await this.entityService.createRegister(dataForCreation);
             return res.status(200).json(newRegisterCreated);
-        // } catch (erro) {
-        //     return res.status(400).json({ message: 'deu ruim' });
-        // }
+         } catch (erro) {
+             return res.status(400).json({ message: 'deu ruim' });
+         }
     }
 
     async update(req, res) {
