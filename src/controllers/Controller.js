@@ -4,12 +4,12 @@ class Controller {
     }
 
     async getAll(req, res) {
-        try {
+        // try {
             const registerList = await this.entityService.getAllRegisters();
             return res.status(200).json(registerList);
-        } catch (erro) {
-            return res.status(400).json({ message: 'deu ruim' });
-        }
+        // } catch (erro) {
+        //     return res.status(400).json({ message: 'deu ruim' });
+        // }
     }
     async getOneById(req, res) {
         const { id } = req.params;
@@ -22,12 +22,12 @@ class Controller {
     }
     async createNew(req, res) {
         const dataForCreation = req.body;
-        try {
-            const newRegisterCreated = await this.entidadeService.createRegister(dataForCreation);
+        // try {
+            const newRegisterCreated = await this.entityService.createRegister(dataForCreation);
             return res.status(200).json(newRegisterCreated);
-        } catch (erro) {
-            return res.status(400).json({ message: 'deu ruim' });
-        }
+        // } catch (erro) {
+        //     return res.status(400).json({ message: 'deu ruim' });
+        // }
     }
 
     async update(req, res) {
