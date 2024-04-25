@@ -5,7 +5,7 @@ const coursesRoutes = new CourseController();
 
 const router = Router();
 
-router.get('/courses', (req, res)=> coursesRoutes.getAll(req, res));
+router.get('/courses', (req, res)=> coursesRoutes.getCourses(req, res));
 router.get('/courses/:id', (req, res)=> coursesRoutes.getOneById(req, res));
 
 router.post('/courses', (req, res)=> coursesRoutes.createNew(req, res));

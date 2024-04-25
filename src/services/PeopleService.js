@@ -1,8 +1,10 @@
+const dataSource = require('../database/models');
 const Services = require('./Services.js');
 
-class PeopleService extends Services{
-    constructor(){
+class PeopleService extends Services {
+    constructor() {
         super('People');
+        this.registerServices = new Services('Registration')
     }
     async getAllRegistrationsAtivesByStudants(id) {
         const studant = await super.getOneRegisterById(id);
@@ -15,9 +17,16 @@ class PeopleService extends Services{
         return listRegisters;
     }
 
-    async getPeopleScopeAll(){
+    async getPeopleScopeAll() {
         const listPeople = await super.getRegistersByScope('allRegisters');
         return listPeople;
+    }
+
+    async cancelPeopleAndEnrolls(studant_id) {
+        return dataSource.sequelize.transaction(async (transaction) => {
+            await super.updateRegister({ ativo: false }, { id: studant_id }, transaction);
+            await this.registerServices.updateRegister({ status: 'cancelado' }, { studant_id: studant_id }, transaction);
+        })
     }
 }
 

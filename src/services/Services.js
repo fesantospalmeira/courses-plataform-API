@@ -5,8 +5,8 @@ class Services {
         this.model = modelName;
     }
 
-    async getAllRegisters() {
-        return dataSource[this.model].findAll();
+    async getAllRegisters(where = {}) {
+        return dataSource[this.model].findAll({ where: { ...where } });
     }
 
     async getRegistersByScope(scope) {
@@ -20,14 +20,20 @@ class Services {
         return dataSource[this.model].findOne({ where: { ...where } });
     }
 
+    async getAndCountRegisters(options) {
+        return dataSource[this.model].findAndCountAll({ ...options });
+    }
+
     async createRegister(dataForCreation) {
         return dataSource[this.model].create(dataForCreation);
     }
 
-    async updateRegister(dataUpdated, where) {
-        const listRegisterUpdated = dataSource[this.model].update(dataUpdated, {
-            where: { ...where }
-        });
+    async updateRegister(dataUpdated, where, t = {}) {
+        const listRegisterUpdated = await dataSource[this.model]
+            .update(dataUpdated, {
+                where: { ...where },
+                transaction: t,
+            });
         if (listRegisterUpdated[0] === 0) {
             return false;
         }

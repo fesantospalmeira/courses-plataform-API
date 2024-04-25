@@ -19,7 +19,7 @@ class PeopleController extends Controller {
     }
   }
   async getAllRegistrations(req, res) {
-    const { studant_id } = req.params
+    const { studant_id } = req.params;
     try {
       const registrationList = await peopleService.getAllRegistrationsByStudants(Number(studant_id));
       return res.status(200).json(registrationList);
@@ -29,11 +29,21 @@ class PeopleController extends Controller {
     }
   }
 
-  async getAllPeople(req, res){
-    try{
+  async getAllPeople(req, res) {
+    try {
       const listAllPeople = await peopleService.getPeopleScopeAll();
       return res.status(200).json(listAllPeople);
-    } catch(erro){
+    } catch (erro) {
+      return res.status(500).json({ erro: erro.message });
+    }
+  }
+
+  async cancelRegisterStudant(req, res) {
+    const { studant_id } = req.params;
+    try {
+      await peopleService.cancelPeopleAndEnrolls(Number(studant_id));
+      return res.status(200).json({ message: `registrations relating to the student ${studant_id} canceled.` });
+    } catch (erro) {
       return res.status(500).json({ erro: erro.message });
     }
   }
