@@ -6,8 +6,13 @@ class PeopleService extends Services{
     }
     async getAllRegistrationsByStudants(id) {
         const studant = await super.getOneRegisterById(id);
-        const listaMatricula = await studant.getEnrolledClasses();
-        return listaMatricula;
+        const listRegisters = await studant.getEnrolledClasses();
+        return listRegisters;
+    }
+
+    async getPeopleScopeAll(){
+        const listPeople = await super.getRegistersByScope('allRegisters');
+        return listPeople;
     }
 }
 

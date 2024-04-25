@@ -1,4 +1,5 @@
 'use strict';
+const isValid = require('../../utils/validCpfHelper.js');
 const {
   Model
 } = require('sequelize');
@@ -10,15 +11,38 @@ module.exports = (sequelize, DataTypes) => {
       });
       People.hasMany(models.Registration,{
         foreignKey:'studant_id',
-        scope: {status: 'matriculado'},
+        // scope: {status: 'matriculado'},
         as:'EnrolledClasses'
       });
     }
   }
   People.init({
-    name: DataTypes.STRING,
-    email: DataTypes.STRING,
-    cpf: DataTypes.STRING,
+    name: {
+      type:DataTypes.STRING,
+      validate: {
+        len: {
+          args: [3, 40],
+          msg:'The name field must have a minimum of 3 and a maximum of 40 characters.'
+        }
+      }
+    },
+    email: {
+      type: DataTypes.STRING,
+      validate: {
+        isEmail:{
+          args: true,
+          msg: 'Email format incorrect.'
+        }
+      }
+    },
+    cpf: {
+      type:DataTypes.STRING,
+      validate: {
+        cpfIsValid:(cpf)=>{
+          if (!isValid(cpf)) throw new Error('CPF number invalid.')
+        }
+      }
+    },
     ativo: DataTypes.BOOLEAN,
     role: DataTypes.STRING
   }, {
@@ -26,6 +50,16 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'People',
     tableName: 'pessoas',
     paranoid: true,
+    defaultScope:{
+      where: {
+        ativo: true,
+      }
+    },
+    scopes:{
+      allRegisters:{
+        where: {}
+      }
+    }
   });
   return People;
 };

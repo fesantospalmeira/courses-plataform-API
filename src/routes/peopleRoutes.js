@@ -8,6 +8,7 @@ const registrationController = new RegistrationController();
 const router = Router();
 
 router.get('/people', (req, res)=> peopleController.getAll(req, res));
+router.get('/people/all', (req, res)=> peopleController.getAllPeople(req, res));
 router.get('/people/:id', (req, res)=> peopleController.getOneById(req, res));
 
 
