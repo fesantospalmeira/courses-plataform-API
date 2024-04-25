@@ -12,6 +12,6 @@ router.post('/category', (req, res)=> categoriesRoutes.createNew(req, res));
 
 router.put('/category/:id', (req, res)=> categoriesRoutes.update(req, res));
 
-router.delete('/category/:id', (req, res)=> categoriesRoutes.update(req, res));
+router.delete('/category/:id', (req, res)=> categoriesRoutes.delete(req, res));
 
 module.exports = router;

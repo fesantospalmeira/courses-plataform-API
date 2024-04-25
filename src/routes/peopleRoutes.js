@@ -16,7 +16,7 @@ router.post('/people', (req, res)=> peopleController.createNew(req, res));
 
 router.put('/people/:id', (req, res)=> peopleController.update(req, res));
 
-router.delete('/people/:id', (req, res)=> peopleController.update(req, res));
+router.delete('/people/:id', (req, res)=> peopleController.delete(req, res));
 
 router.get('/people/:studant_id/registration', (req, res)=> peopleController.getAllRegistrations(req, res));
 router.post('/people/:studant_id/registration', (req, res)=> registrationController.createNew(req, res));

@@ -12,6 +12,6 @@ router.post('/courses', (req, res)=> coursesRoutes.createNew(req, res));
 
 router.put('/courses/:id', (req, res)=> coursesRoutes.update(req, res));
 
-router.delete('/courses/:id', (req, res)=> coursesRoutes.update(req, res));
+router.delete('/courses/:id', (req, res)=> coursesRoutes.delete(req, res));
 
 module.exports = router;

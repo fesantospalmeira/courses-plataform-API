@@ -4,12 +4,12 @@ class Controller {
     }
 
     async getAll(req, res) {
-        // try {
+         try {
             const registerList = await this.entityService.getAllRegisters();
             return res.status(200).json(registerList);
-        // } catch (erro) {
-        //     return res.status(400).json({ message: 'deu ruim' });
-        // }
+         } catch (erro) {
+             return res.status(500).json({erro: erro.message });
+         }
     }
     async getOneById(req, res) {
         const { id } = req.params;
@@ -17,7 +17,7 @@ class Controller {
             const oneRegister = await this.entityService.getOneRegisterById(Number(id));
             return res.status(200).json(oneRegister);
         } catch (erro) {
-            return res.status(400).json({ message: 'deu ruim' });
+            return res.status(500).json({erro: erro.message });
         }
     }
     async createNew(req, res) {
@@ -26,7 +26,7 @@ class Controller {
             const newRegisterCreated = await this.entityService.createRegister(dataForCreation);
             return res.status(200).json(newRegisterCreated);
          } catch (erro) {
-             return res.status(400).json({ message: 'deu ruim' });
+             return res.status(500).json({erro: erro.message });
          }
     }
 
@@ -36,11 +36,11 @@ class Controller {
         try {
             const isUpdated = await this.entityService.updateRegister(dataUpdated, Number(id))
             if (!isUpdated) {
-                return res.status(400).json({ message: "The register is not updated" });
+                return res.status(500).json({ message: "The register is not updated" });
             }
             return res.status(200).json({ message: `id ${id} updated sucessfully!` });
         } catch (erro) {
-            return res.status(400).json({ message: 'deu ruim' });
+            return res.status(500).json({erro: erro.message });
         }
     }
 
@@ -48,11 +48,11 @@ class Controller {
         const { id } = req.params;
         try {
             await this.entityService.deleteRegister(Number(id));
-            return res.status(200).json({ mensagem: `id ${id} deletado` });
+            return res.status(200).json({ mensagem: `id:${id} deleted sucessfully!` });
 
 
-        } catch (error) {
-            return res.status(500).json(error.message);
+        } catch (erro) {
+            return res.status(500).json({erro: erro.message});
         }
     }
 
