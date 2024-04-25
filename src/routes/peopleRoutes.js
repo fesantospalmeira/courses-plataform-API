@@ -11,15 +11,21 @@ router.get('/people', (req, res)=> peopleController.getAll(req, res));
 router.get('/people/all', (req, res)=> peopleController.getAllPeople(req, res));
 router.get('/people/:id', (req, res)=> peopleController.getOneById(req, res));
 
-
 router.post('/people', (req, res)=> peopleController.createNew(req, res));
-
 
 router.put('/people/:id', (req, res)=> peopleController.update(req, res));
 
 router.delete('/people/:id', (req, res)=> peopleController.delete(req, res));
 
-router.get('/people/:studant_id/registration', (req, res)=> peopleController.getAllRegistrations(req, res));
-router.post('/people/:studant_id/registration', (req, res)=> registrationController.createNew(req, res));
+router.get('/people/:studant_id/registrations', (req, res)=> peopleController.getRegistrationsAtives(req, res));
+router.get('/people/:studant_id/registrations/all', (req, res)=> peopleController.getAllRegistrations(req, res));
+router.get('/people/:studant_id/registrations/:id', (req, res)=> registrationController.getOne(req, res));
+
+router.post('/people/:studant_id/registrations', (req, res)=> registrationController.createNew(req, res));
+
+router.put('/people/:studant_id/registrations/:id', (req, res)=> registrationController.update(req, res));
+
+router.delete('/people/:studant_id/registrations/:id', (req, res)=> registrationController.delete(req, res));
+
 
 module.exports = router;

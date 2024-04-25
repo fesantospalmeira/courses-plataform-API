@@ -1,15 +1,17 @@
+const idConverter = require('../utils/stringConverterHelper.js');
+
 class Controller {
     constructor(entityService) {
         this.entityService = entityService;
     }
 
     async getAll(req, res) {
-         try {
+        try {
             const registerList = await this.entityService.getAllRegisters();
             return res.status(200).json(registerList);
-         } catch (erro) {
-             return res.status(500).json({erro: erro.message });
-         }
+        } catch (erro) {
+            return res.status(500).json({ erro: erro.message });
+        }
     }
     async getOneById(req, res) {
         const { id } = req.params;
@@ -17,30 +19,41 @@ class Controller {
             const oneRegister = await this.entityService.getOneRegisterById(Number(id));
             return res.status(200).json(oneRegister);
         } catch (erro) {
-            return res.status(500).json({erro: erro.message });
+            return res.status(500).json({ erro: erro.message });
+        }
+    }
+    async getOne(req, res) {
+        const { ...params } = req.params;
+        const where = idConverter(params);
+        try {
+            const oneRegister = await this.entityService.getOneRegister(where);
+            return res.status(200).json(oneRegister);
+        } catch (erro) {
+            return res.status(500).json({ erro: erro.message });
         }
     }
     async createNew(req, res) {
         const dataForCreation = req.body;
-         try {
+        try {
             const newRegisterCreated = await this.entityService.createRegister(dataForCreation);
             return res.status(200).json(newRegisterCreated);
-         } catch (erro) {
-             return res.status(500).json({erro: erro.message });
-         }
+        } catch (erro) {
+            return res.status(500).json({ erro: erro.message });
+        }
     }
 
     async update(req, res) {
-        const { id } = req.params;
+        const { ...params } = req.params;
         const dataUpdated = req.body;
+        const where = idConverter(params);
         try {
-            const isUpdated = await this.entityService.updateRegister(dataUpdated, Number(id))
+            const isUpdated = await this.entityService.updateRegister(dataUpdated, where)
             if (!isUpdated) {
                 return res.status(500).json({ message: "The register is not updated" });
             }
             return res.status(200).json({ message: `id ${id} updated sucessfully!` });
         } catch (erro) {
-            return res.status(500).json({erro: erro.message });
+            return res.status(500).json({ erro: erro.message });
         }
     }
 
@@ -52,7 +65,7 @@ class Controller {
 
 
         } catch (erro) {
-            return res.status(500).json({erro: erro.message});
+            return res.status(500).json({ erro: erro.message });
         }
     }
 

@@ -4,9 +4,14 @@ class PeopleService extends Services{
     constructor(){
         super('People');
     }
-    async getAllRegistrationsByStudants(id) {
+    async getAllRegistrationsAtivesByStudants(id) {
         const studant = await super.getOneRegisterById(id);
         const listRegisters = await studant.getEnrolledClasses();
+        return listRegisters;
+    }
+    async getAllRegistrationsByStudants(id) {
+        const studant = await super.getOneRegisterById(id);
+        const listRegisters = await studant.getAllEnrolledClasses();
         return listRegisters;
     }
 

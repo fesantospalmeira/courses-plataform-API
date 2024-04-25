@@ -8,6 +8,16 @@ class PeopleController extends Controller {
     super(peopleService);
   }
 
+  async getRegistrationsAtives(req, res) {
+    const { studant_id } = req.params
+    try {
+      const registrationList = await peopleService.getAllRegistrationsAtivesByStudants(Number(studant_id));
+      return res.status(200).json(registrationList);
+
+    } catch (erro) {
+      return res.status(500).json({ erro: erro.message });
+    }
+  }
   async getAllRegistrations(req, res) {
     const { studant_id } = req.params
     try {

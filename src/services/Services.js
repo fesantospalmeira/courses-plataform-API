@@ -1,37 +1,40 @@
 const dataSource = require('../database/models');
 
 class Services {
-    constructor(modelName){
+    constructor(modelName) {
         this.model = modelName;
     }
 
-    async getAllRegisters(){
+    async getAllRegisters() {
         return dataSource[this.model].findAll();
     }
 
-    async getRegistersByScope(scope){
+    async getRegistersByScope(scope) {
         return dataSource[this.model].scope(scope).findAll();
     }
-    
-    async getOneRegisterById(id){
+
+    async getOneRegisterById(id) {
         return dataSource[this.model].findByPk(id);
     }
+    async getOneRegister(where) {
+        return dataSource[this.model].findOne({ where: { ...where } });
+    }
 
-    async createRegister(dataForCreation){
+    async createRegister(dataForCreation) {
         return dataSource[this.model].create(dataForCreation);
     }
 
-    async updateRegister(dataUpdated, id){
+    async updateRegister(dataUpdated, where) {
         const listRegisterUpdated = dataSource[this.model].update(dataUpdated, {
-            where: { id }
+            where: { ...where }
         });
-        if(listRegisterUpdated[0] ===0 ){
+        if (listRegisterUpdated[0] === 0) {
             return false;
         }
         return true;
     }
 
-    async deleteRegister(id){
+    async deleteRegister(id) {
         return dataSource[this.model].destroy({ where: { id: id } });
     }
 }
